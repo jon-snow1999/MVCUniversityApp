@@ -11,5 +11,6 @@ namespace MVCUniversityApp.Models
 
         [ForeignKey("DepartmentId")]
         public virtual Department Department { get; set; }
+
     }
 }
