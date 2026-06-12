@@ -2,14 +2,13 @@
 
 namespace MVCUniversityApp.Models
 {
-    public class Department
+    public class Department: BaseClass
     {
-        [Key]
-        public int Id { get; set; }
-        public string Name { get; set; }
         public string Manager { get; set; }
 
         public List<Instructor> instructors = new List<Instructor>();
+        public List<Course> Courses = new List<Course>();
+
 
 
     }
