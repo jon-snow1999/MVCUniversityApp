@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVCUniversityApp.Context;
+using MVCUniversityApp.Models;
 
 namespace MVCUniversityApp.Controllers
 {
@@ -12,10 +13,18 @@ namespace MVCUniversityApp.Controllers
             return View("all", db.Instructors.Where((instructor) => instructor.Id != null));
         }
 
-        public IActionResult Details(int Id)
+        public IActionResult Details(int id)
         {
+            UniContext db = new UniContext();
+            Instructor teacher = db.Instructors.FirstOrDefault((instructor) => instructor.Id == id);
+            if(teacher != null)
+            {
+                return View("Details", teacher);
+            } else
+            {
+                return View("Details", null);
+            }
             
-            return View("Details");
         }
     }
 }
