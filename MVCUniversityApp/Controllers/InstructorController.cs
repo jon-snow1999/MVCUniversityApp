@@ -31,6 +31,7 @@ namespace MVCUniversityApp.Controllers
         {
             return View("New");
         }
+        [HttpPost]
         public IActionResult add(Instructor instructor)
         {
             UniContext db = new UniContext();
