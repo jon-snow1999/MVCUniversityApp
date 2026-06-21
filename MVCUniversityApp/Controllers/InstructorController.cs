@@ -26,5 +26,26 @@ namespace MVCUniversityApp.Controllers
             }
             
         }
+
+        public IActionResult addNew()
+        {
+            return View("New");
+        }
+        public IActionResult add(Instructor instructor)
+        {
+            UniContext db = new UniContext();
+            Department lastDepartment = db.Departments.OrderBy((department) => department.Id).Last();
+            if (instructor.Name != null && instructor.ImageUrl != null && instructor.Salary != null && instructor.Address != null && instructor.DepartmentId != null && instructor.DepartmentId <= lastDepartment.Id)
+            {
+                db.Instructors.Add(instructor);
+                db.SaveChanges();
+                return RedirectToAction(actionName: "Index", controllerName: "Instructor");
+            } else
+            {
+                return Content("You have added an invalid instructor data");
+            }
+            
+            
+        }
     }
 }
