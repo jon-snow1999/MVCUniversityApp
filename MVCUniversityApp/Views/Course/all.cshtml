@@ -1,0 +1,30 @@
+﻿@model List<Course>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Max Degree</th>
+            <th>Min Degree</th>
+            <th>Department ID</th>
+            <th>Course Name</th>
+            <th>Edit Link</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(Course course in Model)
+        {
+            <tr>
+                <td>@course.MaxDegree</td>
+                <td>@course.MinDegree</td>
+                <td>@course.DepartmentId</td>
+                <td>@course.Name</td>
+                <td><a href="/course/edit?id=@course.Id">Edit</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

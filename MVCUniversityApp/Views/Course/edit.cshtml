@@ -1,0 +1,35 @@
+﻿@using MVCUniversityApp.Models
+@using MVCUniversityApp.ViewModel;
+@model  CourseWithDeptList
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<form action="/course/editcourse/@Model.course.Id" method="post">
+    <div>
+        <label>Max Degree</label>
+        <input type="text" id="MaxDegree" name="MaxDegree" value="@Model.course.MaxDegree" class="form form-control" />
+    </div>
+    <div>
+        <label>Min Degree</label>
+        <input type="text" id="MinDegree" name="MinDegree" value="@Model.course.MinDegree" class="form form-control" />
+    </div>
+    <div>
+        <label>Course Name</label>
+        <input type="text" id="Name" name="Name" value="@Model.course.Name" class="form form-control" />
+    </div>
+    <div>
+        <label>Department ID</label>
+        <select id="department" name="DepartmentId" class="btn btn-primary">
+            @foreach (var department in Model.departments)
+                {
+                    <option value="@department.Id">@department.Name</option>
+                }
+        </select>
+    </div>
+    <div>
+        <input type="submit" value="Save edit" class="btn btn-primary"/>
+    </div>
+</form>
