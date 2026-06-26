@@ -51,5 +51,24 @@ namespace MVCUniversityApp.Controllers
             }
             
         }
+    
+        public IActionResult newPage()
+        {
+            return View("New", db.Departments.ToList());
+        }
+
+        public IActionResult addNewCourse(Course course)
+        {
+            if(course.Name != null && course.MaxDegree != 0 && course.MinDegree != 0)
+            {
+                db.Courses.Add(course);
+                db.SaveChanges();
+                return RedirectToAction(actionName: "Index", controllerName: "Course");
+            } else
+            {
+                return View("New", db.Departments.ToList());
+            }
+            
+        }
     }
 }

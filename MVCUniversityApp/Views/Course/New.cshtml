@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Department>
+<form method="post" action="/course/addnewcourse" class="form form-control">
+    <div>
+        <label for="Name">Name</label>
+        <input type="text" name="Name" id="Name" class="form form-control"/>
+    </div>
+    <div>
+        <label for="Max">Max Degree</label>
+        <input type="number" name="MaxDegree" id="Max" class="form form-control" />
+    </div>
+    <div>
+        <label for="Min">Min Degree</label>
+        <input type="number" name="MaxDegree" id="Max" class="form form-control" />
+    </div>
+    <div>
+        <label for="deptID">Department ID</label>
+        <select name="DepartmentId" id="deptID" class="btn btn-primary">
+            @foreach (var department in Model)
+                {
+                    <option value="@department.Id">@department.Name</option>
+                }
+        </select>
+    </div>
+    <div>
+        <input type="submit" value="Add" class="btn btn-primary" />
+    </div>
+</form>
+<a href="/course/index">Back to List</a> 
