@@ -11,7 +11,6 @@ namespace MVCUniversityApp.Controllers
         UniContext db = new UniContext();
         public IActionResult Index()
         {
-            
             return View("all", db.Courses.ToList());
         }
 
@@ -23,7 +22,7 @@ namespace MVCUniversityApp.Controllers
                 course = courseFromDB,
                 departments = db.Departments.ToList()
             };
-            if(courseFromDB != null)
+            if (courseFromDB != null)
             {
                 return View("edit", cd);
             }
@@ -35,12 +34,13 @@ namespace MVCUniversityApp.Controllers
         {
 
             //Course corseFromDB = db.Courses.FirstOrDefault((course) => course.Id == courseFromForm.Id);
-            if(courseFromForm.Name != null && courseFromForm.MaxDegree != null && courseFromForm.MinDegree != null)
+            if (courseFromForm?.Name != null && courseFromForm?.MaxDegree != null && courseFromForm?.MinDegree != null)
             {
                 db.Courses.Update(courseFromForm);
                 db.SaveChanges();
                 return RedirectToAction(actionName: "Index", controllerName: "Course");
-            } else
+            }
+            else
             {
                 CourseWithDeptList cd = new CourseWithDeptList
                 {
@@ -49,9 +49,9 @@ namespace MVCUniversityApp.Controllers
                 };
                 return View("edit", cd);
             }
-            
+
         }
-    
+
         public IActionResult newPage()
         {
             return View("New", db.Departments.ToList());
@@ -59,16 +59,17 @@ namespace MVCUniversityApp.Controllers
 
         public IActionResult addNewCourse(Course course)
         {
-            if(course.Name != null && course.MaxDegree != 0 && course.MinDegree != 0)
+            if (course.Name != null)
             {
                 db.Courses.Add(course);
                 db.SaveChanges();
                 return RedirectToAction(actionName: "Index", controllerName: "Course");
-            } else
+            }
+            else
             {
                 return View("New", db.Departments.ToList());
             }
-            
+
+        }
         }
     }
-}
