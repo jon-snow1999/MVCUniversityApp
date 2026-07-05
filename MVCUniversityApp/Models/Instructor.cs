@@ -10,8 +10,8 @@ namespace MVCUniversityApp.Models
         public string Address { get; set; }
         public int DepartmentId { get; set; }
         [ForeignKey("DepartmentId")]
-        public virtual Department Department { get; set; }
-        public List<Course> Courses { get; set; }
+        public virtual Department? Department { get; set; }
+        public List<Course>? Courses { get; set; }
 
         public override string ToString()
         {

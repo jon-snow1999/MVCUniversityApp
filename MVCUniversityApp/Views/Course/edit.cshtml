@@ -8,22 +8,28 @@
 }
 
 <h1>Editing the course @Model.course.Name</h1>
+<div asp-validation-summary="All">
+</div>
 <form action="/course/editcourse/@Model.course.Id" method="post">
     <div>
         <label>Max Degree</label>
         <input type="text" id="MaxDegree" name="MaxDegree" value="@Model.course.MaxDegree" class="form form-control" />
+        <span asp-validation-for="@Model.course.MaxDegree"></span>
     </div>
     <div>
         <label>Min Degree</label>
         <input type="text" id="MinDegree" name="MinDegree" value="@Model.course.MinDegree" class="form form-control" />
+        <span asp-validation-for="@Model.course.MinDegree"></span>
     </div>
     <div>
         <label>Course Name</label>
         <input type="text" id="Name" name="Name" value="@Model.course.Name" class="form form-control" />
+        <span asp-validation-for="@Model.course.Name"></span>
     </div>
     <div>
         <label>Department ID</label>
         <select id="department" name="DepartmentId" class="btn btn-primary">
+            <option value="0">---Select a department---</option>
             @foreach (var department in Model.departments)
                 {
                     if(department.Id == Model.course.DepartmentId)
@@ -36,9 +42,13 @@
                     
                 }
         </select>
+        <span asp-validation-for="@Model.course.Department"></span>
     </div>
     <div>
         <input type="submit" value="Save edit" class="btn btn-primary"/>
     </div>
 </form>
 <a href="/course/index">Back to List</a> 
+<script src="~/lib/jquery/dist/jquery.min.js" defer></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js" defer></script>
+<script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" defer></script>

@@ -34,11 +34,24 @@ namespace MVCUniversityApp.Controllers
         {
 
             //Course corseFromDB = db.Courses.FirstOrDefault((course) => course.Id == courseFromForm.Id);
-            if (courseFromForm?.Name != null && courseFromForm?.MaxDegree != null && courseFromForm?.MinDegree != null)
+            if (this.ModelState.IsValid == true)
             {
-                db.Courses.Update(courseFromForm);
-                db.SaveChanges();
-                return RedirectToAction(actionName: "Index", controllerName: "Course");
+                try
+                {
+                    db.Courses.Update(courseFromForm);
+                    db.SaveChanges();
+                    return RedirectToAction(actionName: "Index", controllerName: "Course");
+                } catch (Exception e)
+                {
+                    this.ModelState.AddModelError("DepartmentId", "You should have entered a correct department");
+                    CourseWithDeptList cd = new CourseWithDeptList
+                    {
+                        course = courseFromForm,
+                        departments = db.Departments.ToList()
+                    };
+                    return View("edit", cd);
+                }
+               
             }
             else
             {
@@ -59,7 +72,7 @@ namespace MVCUniversityApp.Controllers
 
         public IActionResult addNewCourse(Course course)
         {
-            if (course.Name != null)
+            if (this.ModelState.IsValid == true)
             {
                 db.Courses.Add(course);
                 db.SaveChanges();

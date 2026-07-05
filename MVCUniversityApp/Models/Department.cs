@@ -6,8 +6,8 @@ namespace MVCUniversityApp.Models
     {
         public string Manager { get; set; }
 
-        public List<Instructor> instructors = new List<Instructor>();
-        public List<Course> Courses = new List<Course>();
+        public List<Instructor>? instructors = new List<Instructor>();
+        public List<Course>? Courses = new List<Course>();
 
 
 

@@ -8,10 +8,10 @@ namespace MVCUniversityApp.Models
         public int Degree { get; set; }
         public int CourseId { get; set; }
         [ForeignKey("CourseId")]
-        public virtual Course Course { get; set; }
+        public virtual Course? Course { get; set; }
         public int TraineeId { get; set; }
         [ForeignKey("TraineeId")]
-        public virtual Trainee Trainee { get; set; }
+        public virtual Trainee? Trainee { get; set; }
 
 
     }
