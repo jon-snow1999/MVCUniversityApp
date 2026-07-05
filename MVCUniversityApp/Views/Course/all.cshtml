@@ -13,6 +13,7 @@
             <th>Department ID</th>
             <th>Course Name</th>
             <th>Edit Link</th>
+            <th>Delete Link</th>
         </tr>
     </thead>
     <tbody>
@@ -24,6 +25,7 @@
                 <td>@course.DepartmentId</td>
                 <td>@course.Name</td>
                 <td><a href="/course/edit?id=@course.Id">Edit</a></td>
+                <td><a href="/course/delete?id=@course.Id">Delete</a></td>
             </tr>
         }
     </tbody>

@@ -9,7 +9,7 @@ namespace MVCUniversityApp.Models
             Course? course = validationContext.ObjectInstance as Course;
             string courseName = value.ToString();
             UniContext db = new UniContext();
-            Course? courseFromDB = db.Courses.FirstOrDefault((c) => c.Name == courseName);
+            Course? courseFromDB = db.Courses.FirstOrDefault((c) => c.Name == courseName && c.DepartmentId == course.DepartmentId);
             if(courseFromDB is null)
             {
                 return ValidationResult.Success;

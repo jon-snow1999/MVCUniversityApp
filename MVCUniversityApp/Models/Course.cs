@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MVCUniversityApp.Models
@@ -7,10 +8,13 @@ namespace MVCUniversityApp.Models
     {
         public int Id { get; set; }
         [Unique]
+        [Required]
+        [MinLength(2)]
         public string Name { get; set; }
 
         [Range(150,200,ErrorMessage = "Maximum Value is not between 150 and 200")]
         public int MaxDegree { get; set; }
+
         
         public int MinDegree { get; set; }
         public int DepartmentId { get; set; }

@@ -28,6 +28,24 @@ namespace MVCUniversityApp.Controllers
             }
             return View("edit");
         }
+        public IActionResult Delete(int id)
+        {
+            Course courseFromDB = db.Courses.FirstOrDefault((course) => course.Id == id);
+            return View("delete", courseFromDB);
+        }
+        public IActionResult DeleteCourse(int id, string shoulddelete)
+        {
+            if(shoulddelete == "y")
+            {
+                Course? courseFromDB = db.Courses.FirstOrDefault((course) => course.Id == id);
+                db.Courses.Remove(courseFromDB);
+                db.SaveChanges();
+                return RedirectToAction(actionName: "Index", controllerName: "Course");
+            } else
+            {
+                return RedirectToAction(actionName: "Index", controllerName: "Course");
+            }
+        }
 
         [HttpPost]
         public IActionResult editCourse(Course courseFromForm)
@@ -83,6 +101,15 @@ namespace MVCUniversityApp.Controllers
                 return View("New", db.Departments.ToList());
             }
 
+        }
+
+        public IActionResult CheckMinDegree(int minDegre)
+        {
+            if (minDegre>=10 && minDegre <=50) 
+            {
+                return Json(true);
+            }
+            return Json("Minimum degree must be between 10 and 50");
         }
         }
     }
