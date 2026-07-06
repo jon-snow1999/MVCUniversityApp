@@ -33,6 +33,7 @@ namespace MVCUniversityApp.Controllers
             Course courseFromDB = db.Courses.FirstOrDefault((course) => course.Id == id);
             return View("delete", courseFromDB);
         }
+        [HttpPost]
         public IActionResult DeleteCourse(int id, string shoulddelete)
         {
             if(shoulddelete == "y")
@@ -92,9 +93,17 @@ namespace MVCUniversityApp.Controllers
         {
             if (this.ModelState.IsValid == true)
             {
-                db.Courses.Add(course);
-                db.SaveChanges();
-                return RedirectToAction(actionName: "Index", controllerName: "Course");
+                try
+                {
+                    db.Courses.Add(course);
+                    db.SaveChanges();
+                    return RedirectToAction(actionName: "Index", controllerName: "Course");
+                } catch (Exception e)
+                {
+                    this.ModelState.AddModelError("DepartmentId", "You have chosen a wrong Department");
+                    return View("New", db.Departments.ToList());
+                }
+                
             }
             else
             {
@@ -103,13 +112,15 @@ namespace MVCUniversityApp.Controllers
 
         }
 
-        public IActionResult CheckMinDegree(int minDegre)
+        public IActionResult CheckMin(int minDegree, int maxDegree)
         {
-            if (minDegre>=10 && minDegre <=50) 
+            if(minDegree <= maxDegree)
             {
                 return Json(true);
+            } else
+            {
+                return Json("Minimum degree can't be more than the maximum degree");
             }
-            return Json("Minimum degree must be between 10 and 50");
         }
         }
     }

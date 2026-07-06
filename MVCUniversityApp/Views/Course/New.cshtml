@@ -4,6 +4,9 @@
 @{
 }
 @model List<Department>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
 <div asp-validation-summary="All"></div>
 <form method="post" action="/course/addnewcourse" class="form form-control">
     <div>
@@ -16,11 +19,12 @@
     </div>
     <div>
         <label for="Min">Min Degree</label>
-        <input type="number" name="MaxDegree" id="Max" class="form form-control" />
+        <input type="number" name="MinDegree" id="Min" class="form form-control" />
     </div>
     <div>
         <label for="deptID">Department ID</label>
         <select name="DepartmentId" id="deptID" class="btn btn-primary">
+            <option value="0">----Select Department ---</option>
             @foreach (var department in Model)
                 {
                     <option value="@department.Id">@department.Name</option>

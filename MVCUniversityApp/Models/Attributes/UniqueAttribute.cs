@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using MVCUniversityApp.Context;
-namespace MVCUniversityApp.Models
+namespace MVCUniversityApp.Models.Attributes
 {
     public class UniqueAttribute: ValidationAttribute
     {
