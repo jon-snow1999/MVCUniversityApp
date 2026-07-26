@@ -5,9 +5,9 @@ namespace MVCUniversityApp.Models.Repositories
     public class InstructorRepo :IInstructorRepository
     {
         private readonly UniContext db;
-        public InstructorRepo()
+        public InstructorRepo(UniContext context)
         {
-            db = new UniContext();
+            db = context;
         }
         public void Add(Instructor entity)
         {

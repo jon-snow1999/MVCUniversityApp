@@ -8,13 +8,13 @@ namespace MVCUniversityApp.Models.Attributes
         {
             Course? course = validationContext.ObjectInstance as Course;
             string courseName = value.ToString();
-            UniContext db = new UniContext();
+            UniContext db = validationContext.GetRequiredService<UniContext>();
             Course? courseFromDB = db.Courses.FirstOrDefault((c) => c.Name == courseName && c.DepartmentId == course.DepartmentId);
-            if(courseFromDB is null)
+            if (courseFromDB is null)
             {
                 return ValidationResult.Success;
             }
-            
+
             return new ValidationResult("Name already exits");
         }
     }

@@ -5,9 +5,9 @@ namespace MVCUniversityApp.Models.Repositories
     public class CourseRepo : ICourseRepository
     {
         private readonly UniContext db;
-        public CourseRepo()
+        public CourseRepo(UniContext context)
         {
-            db = new UniContext();
+            db = context;
         }
         public void Add(Course entity)
         {

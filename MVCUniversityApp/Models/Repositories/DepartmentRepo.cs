@@ -5,9 +5,9 @@ namespace MVCUniversityApp.Models.Repositories
     public class DepartmentRepo : IDepartmentRepository
     {
         private readonly UniContext db;
-        public DepartmentRepo()
+        public DepartmentRepo(UniContext context)
         {
-            this.db = new UniContext();
+            this.db = context;
         }
         public void Add(Department entity)
         {

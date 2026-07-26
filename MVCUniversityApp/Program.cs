@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using MVCUniversityApp.Context;
 using MVCUniversityApp.Models.Attributes;
 using MVCUniversityApp.Models.Repositories;
 namespace MVCUniversityApp
@@ -10,7 +12,10 @@ namespace MVCUniversityApp
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddDbContext<UniContext>((optionsBuilder) =>
+            {
+                optionsBuilder.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
+            });
             builder.Services.AddScoped<ICourseRepository, CourseRepo>();
             builder.Services.AddScoped<IInstructorRepository, InstructorRepo>();
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepo>();
