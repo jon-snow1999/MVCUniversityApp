@@ -3,24 +3,31 @@ using Microsoft.Identity.Client;
 using MVCUniversityApp.Context;
 using MVCUniversityApp.Models;
 using MVCUniversityApp.ViewModel;
+using MVCUniversityApp.Models.Repositories;
 namespace MVCUniversityApp.Controllers
 {
     public class CourseController : Controller
     {
-
-        UniContext db = new UniContext();
+        public readonly CourseRepo courseRepo;
+        public readonly DepartmentRepo departmentRepo;
+        //public readonly UniContext db;
+        public CourseController()
+        {
+            this.courseRepo = new CourseRepo();
+            this.departmentRepo = new DepartmentRepo();
+        }
         public IActionResult Index()
         {
-            return View("all", db.Courses.ToList());
+            return View("all", this.courseRepo.getAll());
         }
 
         public IActionResult Edit(int id)
         {
-            Course courseFromDB = db.Courses.FirstOrDefault((course) => course.Id == id);
+            Course courseFromDB = this.courseRepo.getById(id);
             CourseWithDeptList cd = new CourseWithDeptList
             {
                 course = courseFromDB,
-                departments = db.Departments.ToList()
+                departments = this.departmentRepo.getAll()
             };
             if (courseFromDB != null)
             {
@@ -30,7 +37,7 @@ namespace MVCUniversityApp.Controllers
         }
         public IActionResult Delete(int id)
         {
-            Course courseFromDB = db.Courses.FirstOrDefault((course) => course.Id == id);
+            Course courseFromDB = this.courseRepo.getById(id);
             return View("delete", courseFromDB);
         }
         [HttpPost]
@@ -38,9 +45,9 @@ namespace MVCUniversityApp.Controllers
         {
             if(shoulddelete == "y")
             {
-                Course? courseFromDB = db.Courses.FirstOrDefault((course) => course.Id == id);
-                db.Courses.Remove(courseFromDB);
-                db.SaveChanges();
+                Course? courseFromDB = this.courseRepo.getById(id);
+                this.courseRepo.Delete(courseFromDB);
+                this.courseRepo.SaveDB();
                 return RedirectToAction(actionName: "Index", controllerName: "Course");
             } else
             {
@@ -52,13 +59,13 @@ namespace MVCUniversityApp.Controllers
         public IActionResult editCourse(Course courseFromForm)
         {
 
-            //Course corseFromDB = db.Courses.FirstOrDefault((course) => course.Id == courseFromForm.Id);
+            
             if (this.ModelState.IsValid == true)
             {
                 try
                 {
-                    db.Courses.Update(courseFromForm);
-                    db.SaveChanges();
+                    this.courseRepo.Update(courseFromForm);
+                    this.courseRepo.SaveDB();
                     return RedirectToAction(actionName: "Index", controllerName: "Course");
                 } catch (Exception e)
                 {
@@ -66,7 +73,7 @@ namespace MVCUniversityApp.Controllers
                     CourseWithDeptList cd = new CourseWithDeptList
                     {
                         course = courseFromForm,
-                        departments = db.Departments.ToList()
+                        departments = this.departmentRepo.getAll()
                     };
                     return View("edit", cd);
                 }
@@ -77,7 +84,7 @@ namespace MVCUniversityApp.Controllers
                 CourseWithDeptList cd = new CourseWithDeptList
                 {
                     course = courseFromForm,
-                    departments = db.Departments.ToList()
+                    departments = this.departmentRepo.getAll()
                 };
                 return View("edit", cd);
             }
@@ -86,7 +93,7 @@ namespace MVCUniversityApp.Controllers
 
         public IActionResult newPage()
         {
-            return View("New", db.Departments.ToList());
+            return View("New", this.departmentRepo.getAll());
         }
 
         public IActionResult addNewCourse(Course course)
@@ -95,19 +102,19 @@ namespace MVCUniversityApp.Controllers
             {
                 try
                 {
-                    db.Courses.Add(course);
-                    db.SaveChanges();
+                    this.courseRepo.Add(course);
+                    this.courseRepo.SaveDB();
                     return RedirectToAction(actionName: "Index", controllerName: "Course");
                 } catch (Exception e)
                 {
                     this.ModelState.AddModelError("DepartmentId", "You have chosen a wrong Department");
-                    return View("New", db.Departments.ToList());
+                    return View("New", this.departmentRepo.getAll());
                 }
                 
             }
             else
             {
-                return View("New", db.Departments.ToList());
+                return View("New", this.departmentRepo.getAll());
             }
 
         }
