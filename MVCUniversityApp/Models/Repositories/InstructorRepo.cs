@@ -2,7 +2,7 @@
 using MVCUniversityApp.Context;
 namespace MVCUniversityApp.Models.Repositories
 {
-    public class InstructorRepo : IRepositery<Instructor>
+    public class InstructorRepo :IInstructorRepository
     {
         private readonly UniContext db;
         public InstructorRepo()
@@ -40,6 +40,9 @@ namespace MVCUniversityApp.Models.Repositories
             this.db.SaveChanges();
         }
 
-       
+        public IQueryable getAllNonId()
+        {
+            return this.db.Instructors.Where((instruct) => instruct.Id != null);
+        }
     }
 }

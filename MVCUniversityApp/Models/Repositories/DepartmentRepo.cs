@@ -2,7 +2,7 @@
 
 namespace MVCUniversityApp.Models.Repositories
 {
-    public class DepartmentRepo : IRepositery<Department>
+    public class DepartmentRepo : IDepartmentRepository
     {
         private readonly UniContext db;
         public DepartmentRepo()
@@ -39,6 +39,9 @@ namespace MVCUniversityApp.Models.Repositories
             this.db.SaveChanges();
         }
 
-        
+        public Department getLastDeparment()
+        {
+            return this.db.Departments.OrderBy((department) => department.Id).Last();
+        }
     }
 }

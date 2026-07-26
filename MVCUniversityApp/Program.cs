@@ -1,3 +1,5 @@
+using MVCUniversityApp.Models.Attributes;
+using MVCUniversityApp.Models.Repositories;
 namespace MVCUniversityApp
 {
     public class Program
@@ -8,6 +10,10 @@ namespace MVCUniversityApp
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped<ICourseRepository, CourseRepo>();
+            builder.Services.AddScoped<IInstructorRepository, InstructorRepo>();
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepo>();
 
             var app = builder.Build();
 

@@ -8,13 +8,13 @@ namespace MVCUniversityApp.Controllers
 {
     public class CourseController : Controller
     {
-        public readonly CourseRepo courseRepo;
-        public readonly DepartmentRepo departmentRepo;
+        public readonly ICourseRepository courseRepo;
+        public readonly IDepartmentRepository departmentRepo;
         //public readonly UniContext db;
-        public CourseController()
+        public CourseController(ICourseRepository course, IDepartmentRepository department)
         {
-            this.courseRepo = new CourseRepo();
-            this.departmentRepo = new DepartmentRepo();
+            this.courseRepo = course;
+            this.departmentRepo = department;
         }
         public IActionResult Index()
         {

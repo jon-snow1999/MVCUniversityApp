@@ -2,7 +2,7 @@
 
 namespace MVCUniversityApp.Models.Repositories
 {
-    public class CourseRepo : IRepositery<Course>
+    public class CourseRepo : ICourseRepository
     {
         private readonly UniContext db;
         public CourseRepo()
